@@ -1,43 +1,38 @@
 using JsonAnalyzer.Models;
 
-namespace JsonAnalyzer
+namespace JsonAnalyzer;
+
+public partial class EditItemPage : ContentPage
 {
-    public partial class EditItemPage : ContentPage
+    private Car _car;
+    private MainPage _mainPage;
+
+    public EditItemPage(Car car, MainPage mainPage)
     {
-        private Car _car;
-        private MainPage _mainPage;
+        InitializeComponent();
+        _car = car;
+        _mainPage = mainPage;
 
-        public EditItemPage(Car car, MainPage mainPage)
-        {
-            InitializeComponent();
-            _car = car;
-            _mainPage = mainPage;
+        // Заповнення даних у форму
+        NameEntry.Text = _car.Name;
+        BrandEntry.Text = _car.Brand;
+        PriceEntry.Text = _car.Price.ToString();
+        YearEntry.Text = _car.Year.ToString();
+        CategoryEntry.Text = _car.Category;
+        StockEntry.Text = _car.Stock.ToString();
+    }
 
-            JsonEditor.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_car, Newtonsoft.Json.Formatting.Indented);
-        }
+    private void OnSaveClicked(object sender, EventArgs e)
+    {
+        // Оновлення даних автомобіля
+        _car.Name = NameEntry.Text;
+        _car.Brand = BrandEntry.Text;
+        _car.Price = double.TryParse(PriceEntry.Text, out var price) ? price : 0;
+        _car.Year = int.TryParse(YearEntry.Text, out var year) ? year : 0;
+        _car.Category = CategoryEntry.Text;
+        _car.Stock = int.TryParse(StockEntry.Text, out var stock) ? stock : 0;
 
-        private void OnSaveClicked(object sender, EventArgs e)
-        {
-            try
-            {
-                var updatedCar = Newtonsoft.Json.JsonConvert.DeserializeObject<Car>(JsonEditor.Text);
-                if (updatedCar != null)
-                {
-                    _car.Name = updatedCar.Name;
-                    _car.Brand = updatedCar.Brand;
-                    _car.Price = updatedCar.Price;
-                    _car.Year = updatedCar.Year;
-                    _car.Category = updatedCar.Category;
-                    _car.Stock = updatedCar.Stock;
-
-                    _mainPage.RefreshData();
-                    Navigation.PopAsync();
-                }
-            }
-            catch
-            {
-                DisplayAlert("Error", "Invalid JSON format.", "OK");
-            }
-        }
+        _mainPage.RefreshData();
+        Navigation.PopAsync();
     }
 }

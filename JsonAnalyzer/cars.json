@@ -1,47 +1,182 @@
 [
   {
-    "id": 1,
-    "name": "Tesla Model S",
-    "brand": "Tesla",
-    "price": 79999.99,
-    "year": 2023,
-    "category": "Electric",
-    "stock": 5
+    "Id": 1,
+    "Name": "Tesla Model S",
+    "Brand": "Tesla",
+    "Price": 79999.99,
+    "Year": 2023,
+    "Category": "Electric",
+    "Stock": 5
   },
   {
-    "id": 2,
-    "name": "Ford Mustang Mach-E",
-    "brand": "Ford",
-    "price": 43995.00,
-    "year": 2022,
-    "category": "Electric",
-    "stock": 12
+    "Id": 2,
+    "Name": "Ford Mustang Mach-E",
+    "Brand": "Ford",
+    "Price": 43995.0,
+    "Year": 2022,
+    "Category": "Electric",
+    "Stock": 12
   },
   {
-    "id": 3,
-    "name": "BMW X5",
-    "brand": "BMW",
-    "price": 61700.00,
-    "year": 2023,
-    "category": "SUV",
-    "stock": 8
+    "Id": 3,
+    "Name": "BMW X5",
+    "Brand": "BMW",
+    "Price": 61700.0,
+    "Year": 2023,
+    "Category": "SUV",
+    "Stock": 8
   },
   {
-    "id": 4,
-    "name": "Toyota Corolla",
-    "brand": "Toyota",
-    "price": 20000.00,
-    "year": 2022,
-    "category": "Sedan",
-    "stock": 25
+    "Id": 4,
+    "Name": "Toyota Corolla",
+    "Brand": "Toyota",
+    "Price": 20000.0,
+    "Year": 2022,
+    "Category": "Sedan",
+    "Stock": 25
   },
   {
-    "id": 5,
-    "name": "Mercedes-Benz EQS",
-    "brand": "Mercedes-Benz",
-    "price": 102310.00,
-    "year": 2023,
-    "category": "Luxury Electric",
-    "stock": 3
+    "Id": 5,
+    "Name": "Mercedes-Benz EQS",
+    "Brand": "Mercedes-Benz",
+    "Price": 102310.0,
+    "Year": 2024,
+    "Category": "Luxury Electric",
+    "Stock": 3
+  },
+  {
+    "Id": 6,
+    "Name": "Audi e-tron",
+    "Brand": "Audi",
+    "Price": 65900.0,
+    "Year": 2023,
+    "Category": "Electric SUV",
+    "Stock": 10
+  },
+  {
+    "Id": 7,
+    "Name": "Chevrolet Silverado EV",
+    "Brand": "Chevrolet",
+    "Price": 42900.0,
+    "Year": 2024,
+    "Category": "Electric Truck",
+    "Stock": 7
+  },
+  {
+    "Id": 8,
+    "Name": "Hyundai Ioniq 5",
+    "Brand": "Hyundai",
+    "Price": 39950.0,
+    "Year": 2023,
+    "Category": "Electric",
+    "Stock": 18
+  },
+  {
+    "Id": 9,
+    "Name": "Honda Accord",
+    "Brand": "Honda",
+    "Price": 27690.0,
+    "Year": 2023,
+    "Category": "Sedan",
+    "Stock": 20
+  },
+  {
+    "Id": 10,
+    "Name": "Porsche Taycan",
+    "Brand": "Porsche",
+    "Price": 82400.0,
+    "Year": 2023,
+    "Category": "Luxury Electric",
+    "Stock": 6
+  },
+  {
+    "Id": 11,
+    "Name": "Volkswagen ID.4",
+    "Brand": "Volkswagen",
+    "Price": 37495.0,
+    "Year": 2023,
+    "Category": "Electric SUV",
+    "Stock": 14
+  },
+  {
+    "Id": 12,
+    "Name": "Nissan Leaf",
+    "Brand": "Nissan",
+    "Price": 28700.0,
+    "Year": 2023,
+    "Category": "Compact Electric",
+    "Stock": 30
+  },
+  {
+    "Id": 13,
+    "Name": "Jeep Grand Cherokee",
+    "Brand": "Jeep",
+    "Price": 40995.0,
+    "Year": 2023,
+    "Category": "SUV",
+    "Stock": 9
+  },
+  {
+    "Id": 14,
+    "Name": "Mazda CX-5",
+    "Brand": "Mazda",
+    "Price": 27650.0,
+    "Year": 2023,
+    "Category": "Compact SUV",
+    "Stock": 15
+  },
+  {
+    "Id": 15,
+    "Name": "Subaru Outback",
+    "Brand": "Subaru",
+    "Price": 28295.0,
+    "Year": 2023,
+    "Category": "Wagon",
+    "Stock": 13
+  },
+  {
+    "Id": 16,
+    "Name": "Kia EV6",
+    "Brand": "Kia",
+    "Price": 41400.0,
+    "Year": 2023,
+    "Category": "Electric",
+    "Stock": 8
+  },
+  {
+    "Id": 17,
+    "Name": "Toyota RAV4 Hybrid",
+    "Brand": "Toyota",
+    "Price": 29650.0,
+    "Year": 2023,
+    "Category": "Hybrid SUV",
+    "Stock": 21
+  },
+  {
+    "Id": 18,
+    "Name": "Chevrolet Bolt EV",
+    "Brand": "Chevrolet",
+    "Price": 26600.0,
+    "Year": 2023,
+    "Category": "Compact Electric",
+    "Stock": 25
+  },
+  {
+    "Id": 19,
+    "Name": "Ford F-150 Lightning",
+    "Brand": "Ford",
+    "Price": 39974.0,
+    "Year": 2023,
+    "Category": "Electric Truck",
+    "Stock": 12
+  },
+  {
+    "Id": 20,
+    "Name": "Volvo XC40 Recharge",
+    "Brand": "Volvo",
+    "Price": 53990.0,
+    "Year": 2023,
+    "Category": "Electric SUV",
+    "Stock": 4
   }
 ]

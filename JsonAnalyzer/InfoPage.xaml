@@ -1,0 +1,52 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JsonAnalyzer.InfoPage"
+             Title="Про автора">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="25" BackgroundColor="#F9F9F9">
+
+            <!-- Заголовок -->
+            <Frame BackgroundColor="#4CAF50" Padding="15" CornerRadius="10">
+                <Label Text="Про автора"
+                       FontSize="26"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center" />
+            </Frame>
+
+            <!-- Інформація про автора -->
+            <Frame Padding="15" CornerRadius="10" BorderColor="#E0E0E0" BackgroundColor="White">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="👤 Автор: Безверхий Максим Вікторови"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#333" />
+                    <Label Text="🎓 Курс: 2-й курс"
+                           FontSize="18"
+                           TextColor="#555" />
+                    <Label Text="📚 Група: К-26"
+                           FontSize="18"
+                           TextColor="#555" />
+                    <Label Text="📅 Рік: 2024"
+                           FontSize="18"
+                           TextColor="#555" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Опис програми -->
+            <Frame Padding="15" CornerRadius="10" BorderColor="#E0E0E0" BackgroundColor="White">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📜 Опис:"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="#333" />
+                    <Label Text="Цей додаток дозволяє аналізувати дані у форматі JSON. Він підтримує перегляд, редагування, додавання та фільтрацію елементів у форматі JSON."
+                           FontSize="16"
+                           LineBreakMode="WordWrap"
+                           TextColor="#666" />
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

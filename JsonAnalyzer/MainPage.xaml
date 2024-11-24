@@ -1,60 +1,131 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="JSON Analyzer"
-             x:Class="JsonAnalyzer.MainPage">
-    <Grid RowDefinitions="*,Auto" ColumnDefinitions="2*,3*">
+             Title="Аналізатор JSON"
+             x:Class="JsonAnalyzer.MainPage"
+             BackgroundColor="#E5E7EB">
+    <ContentPage.Resources>
+        <!-- Основні стилі -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#3B82F6" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="#374151" />
+            <Setter Property="Margin" Value="0,5" />
+        </Style>
+        <Style x:Key="EntryStyle" TargetType="Entry">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextColor" Value="#374151" />
+            <Setter Property="BackgroundColor" Value="#F3F4F6" />
+            <Setter Property="Margin" Value="5,5" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+        </Style>
+        <Style x:Key="GridHeaderStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="BackgroundColor" Value="#3B82F6" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="Padding" Value="5,3" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto" ColumnDefinitions="1.75*,3*">
         <!-- Ліва панель -->
-        <ScrollView Grid.Column="0" Padding="10">
+        <Grid Grid.Column="0" RowDefinitions="Auto,*" Padding="10" BackgroundColor="#F9FAFB">
+            <!-- Закріплені кнопки -->
             <VerticalStackLayout Spacing="10">
-                <Button Text="Add File" x:Name="AddFileButton" Clicked="OnAddFileClicked" />
-                <Button Text="Find" x:Name="FindButton" Clicked="OnFindClicked" />
-                <Button Text="Info About Project" x:Name="InfoAboutProjectButton" Clicked="OnInfoClicked" />
-                <HorizontalStackLayout Spacing="10">
-                    <Button Text="Add New Item" x:Name="AddNewItemButton" Clicked="OnAddNewItemClicked" />
-                    <Button Text="Edit Item Info" x:Name="EditItemInfoButton" Clicked="OnEditItemInfoClicked" />
-                    <Button Text="Clear" x:Name="ClearButton" Clicked="OnClearClicked" />
+                <Button Text="Додати файл" x:Name="AddFileButton" Clicked="OnAddFileClicked" Style="{StaticResource ButtonStyle}" />
+                <Button Text="Знайти" x:Name="FindButton" Clicked="OnFindClicked" Style="{StaticResource ButtonStyle}" />
+                <Button Text="Про проєкт" x:Name="InfoAboutProjectButton" Clicked="OnInfoClicked" Style="{StaticResource ButtonStyle}" />
+                <HorizontalStackLayout Spacing="10" HorizontalOptions="Fill">
+                    <Button Text="Додати елемент" x:Name="AddNewItemButton" Clicked="OnAddNewItemClicked" Style="{StaticResource ButtonStyle}" />
+                    <Button Text="Редагувати елемент" x:Name="EditItemInfoButton" Clicked="OnEditItemInfoClicked" Style="{StaticResource ButtonStyle}" />
+                    <Button Text="Видалити" x:Name="DeleteButton" Clicked="OnDeleteClicked" Style="{StaticResource ButtonStyle}" />
                 </HorizontalStackLayout>
-
-                <Label Text="Filter Properties:" FontAttributes="Bold" />
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="Name:" />
-                    <Entry Placeholder="Enter car name" x:Name="FilterNameEntry" />
-                    <Label Text="Brand:" />
-                    <Entry Placeholder="Enter brand" x:Name="FilterBrandEntry" />
-                    <Label Text="Category:" />
-                    <Entry Placeholder="Enter category" x:Name="FilterCategoryEntry" />
-                    <Label Text="Min Price:" />
-                    <Entry Placeholder="Enter min price" x:Name="FilterMinPriceEntry" Keyboard="Numeric" />
-                    <Label Text="Max Price:" />
-                    <Entry Placeholder="Enter max price" x:Name="FilterMaxPriceEntry" Keyboard="Numeric" />
-                    <Label Text="Year:" />
-                    <Entry Placeholder="Enter year" x:Name="FilterYearEntry" Keyboard="Numeric" />
-                    <Label Text="Stock Availability:" />
-                    <Entry Placeholder="Enter stock count" x:Name="FilterStockEntry" Keyboard="Numeric" />
-                </VerticalStackLayout>
+                <Button Text="Очистити" x:Name="ClearButton" Clicked="OnClearClicked" Style="{StaticResource ButtonStyle}" />
             </VerticalStackLayout>
+
+            <!-- Прокручувані фільтри -->
+            <ScrollView Grid.Row="1" Padding="10">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Фільтрувати за властивостями:" FontAttributes="Bold" Style="{StaticResource LabelStyle}" />
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="Назва:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть назву авто" x:Name="FilterNameEntry" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Бренд:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть бренд" x:Name="FilterBrandEntry" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Категорія:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть категорію" x:Name="FilterCategoryEntry" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Мін. ціна:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть мінімальну ціну" x:Name="FilterMinPriceEntry" Keyboard="Numeric" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Макс. ціна:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть максимальну ціну" x:Name="FilterMaxPriceEntry" Keyboard="Numeric" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Рік:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть рік" x:Name="FilterYearEntry" Keyboard="Numeric" Style="{StaticResource EntryStyle}" />
+                        <Label Text="Наявність на складі:" Style="{StaticResource LabelStyle}" />
+                        <Entry Placeholder="Введіть кількість на складі" x:Name="FilterStockEntry" Keyboard="Numeric" Style="{StaticResource EntryStyle}" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- Права панель з горизонтальною і вертикальною прокруткою -->
+        <ScrollView Grid.Column="1" Orientation="Both">
+            <Grid Padding="5" BackgroundColor="#FFFFFF">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Заголовки колонок -->
+                <Label Text="ID" Grid.Row="0" Grid.Column="0" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Назва" Grid.Row="0" Grid.Column="1" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Бренд" Grid.Row="0" Grid.Column="2" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Ціна $" Grid.Row="0" Grid.Column="3" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Рік" Grid.Row="0" Grid.Column="4" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Категорія" Grid.Row="0" Grid.Column="5" Style="{StaticResource GridHeaderStyle}" />
+                <Label Text="Склад" Grid.Row="0" Grid.Column="6" Style="{StaticResource GridHeaderStyle}" />
+
+                <!-- Дані -->
+                <CollectionView x:Name="JsonCollectionView"
+                                Grid.Row="1"
+                                Grid.ColumnSpan="7"
+                                ItemsSource="{Binding _cars}"
+                                SelectionMode="Single"
+                                SelectedItem="{Binding SelectedCar, Mode=TwoWay}"
+                                SelectionChanged="OnSelectionChanged">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="50,150,150,100,100,150,100" RowSpacing="5" Padding="5">
+                                <Label Text="{Binding Id}" Grid.Column="0" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Name}" Grid.Column="1" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Brand}" Grid.Column="2" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Price, StringFormat='{0:N2}'}" Grid.Column="3" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Year}" Grid.Column="4" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Category}" Grid.Column="5" Style="{StaticResource LabelStyle}" />
+                                <Label Text="{Binding Stock}" Grid.Column="6" Style="{StaticResource LabelStyle}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
         </ScrollView>
-
-        <!-- Права панель: перегляд JSON -->
-        <CollectionView Grid.Column="1" x:Name="JsonCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Padding="10" Margin="5" BorderColor="LightGray" CornerRadius="5">
-                        <VerticalStackLayout>
-                            <Label Text="ID: {Binding Id}" FontAttributes="Bold" />
-                            <Label Text="Name: {Binding Name}" />
-                            <Label Text="Brand: {Binding Brand}" />
-                            <Label Text="Price: {Binding Price, StringFormat='{0:C}'}" />
-                            <Label Text="Year: {Binding Year}" />
-                            <Label Text="Category: {Binding Category}" />
-                            <Label Text="Stock: {Binding Stock}" />
-                        </VerticalStackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
-
     </Grid>
 </ContentPage>

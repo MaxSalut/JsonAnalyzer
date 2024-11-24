@@ -3,12 +3,15 @@
              x:Class="JsonAnalyzer.AddNewItemPage"
              Title="Add New Item">
     <VerticalStackLayout Padding="10" Spacing="10">
+        <!-- Entry Fields -->
         <Entry x:Name="NameEntry" Placeholder="Enter Name" />
         <Entry x:Name="BrandEntry" Placeholder="Enter Brand" />
         <Entry x:Name="PriceEntry" Placeholder="Enter Price" Keyboard="Numeric" />
         <Entry x:Name="YearEntry" Placeholder="Enter Year" Keyboard="Numeric" />
         <Entry x:Name="CategoryEntry" Placeholder="Enter Category" />
         <Entry x:Name="StockEntry" Placeholder="Enter Stock" Keyboard="Numeric" />
+
+        <!-- Save Button -->
         <Button Text="Save" Clicked="OnSaveClicked" />
     </VerticalStackLayout>
 </ContentPage>
