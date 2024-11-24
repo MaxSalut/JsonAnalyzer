@@ -7,17 +7,15 @@
         <!-- Ліва панель -->
         <ScrollView Grid.Column="0" Padding="10">
             <VerticalStackLayout Spacing="10">
-                <!-- Кнопки управління -->
-                <Button Text="Add File" x:Name="AddFileButton" Clicked="OnAddFileButtonClicked" />
-                <Button Text="Find" x:Name="FindButton" Clicked="OnFindButtonClicked" />
-                <Button Text="Info About Project" x:Name="InfoAboutProjectButton" Clicked="OnInfoAboutProjectButtonClicked" />
+                <Button Text="Add File" x:Name="AddFileButton" Clicked="OnAddFileClicked" />
+                <Button Text="Find" x:Name="FindButton" Clicked="OnFindClicked" />
+                <Button Text="Info About Project" x:Name="InfoAboutProjectButton" Clicked="OnInfoClicked" />
                 <HorizontalStackLayout Spacing="10">
-                    <Button Text="Add New Item" x:Name="AddNewItemButton" Clicked="OnAddNewItemButtonClicked" />
-                    <Button Text="Edit Item Info" x:Name="EditItemInfoButton" Clicked="OnEditItemInfoButtonClicked" />
-                    <Button Text="Clear" x:Name="ClearButton" Clicked="OnClearButtonClicked" />
+                    <Button Text="Add New Item" x:Name="AddNewItemButton" Clicked="OnAddNewItemClicked" />
+                    <Button Text="Edit Item Info" x:Name="EditItemInfoButton" Clicked="OnEditItemInfoClicked" />
+                    <Button Text="Clear" x:Name="ClearButton" Clicked="OnClearClicked" />
                 </HorizontalStackLayout>
 
-                <!-- Фільтри -->
                 <Label Text="Filter Properties:" FontAttributes="Bold" />
                 <VerticalStackLayout Spacing="5">
                     <Label Text="Name:" />

@@ -1,87 +1,87 @@
-﻿using System.Text.Json;
+﻿using Microsoft.Maui.Controls;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace JsonAnalyzer;
 
 public partial class MainPage : ContentPage
 {
-    private string? _jsonFilePath;
-    private List<dynamic> _jsonData = new();
+    private List<Car> _cars = new();
 
     public MainPage()
     {
         InitializeComponent();
-        AddFileButton.Clicked += OnAddFileButtonClicked;
-        FindButton.Clicked += OnFindButtonClicked;
-        ClearButton.Clicked += OnClearButtonClicked;
-        AddNewItemButton.Clicked += OnAddNewItemButtonClicked;
-        EditItemInfoButton.Clicked += OnEditItemInfoButtonClicked;
-        InfoAboutProjectButton.Clicked += OnInfoAboutProjectButtonClicked;
+        LoadSampleData();
     }
 
-    private async void OnAddFileButtonClicked(object sender, EventArgs e)
+    private void LoadSampleData()
     {
-        var customJsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
-    {
-        { DevicePlatform.iOS, new[] { "public.json" } }, // iOS MIME type
-        { DevicePlatform.Android, new[] { "application/json" } }, // Android MIME type
-        { DevicePlatform.WinUI, new[] { ".json" } }, // Windows extension
-        { DevicePlatform.MacCatalyst, new[] { "json" } } // Mac MIME type
-    });
-
-        var result = await FilePicker.Default.PickAsync(new PickOptions
+        try
         {
-            PickerTitle = "Select a JSON file",
-            FileTypes = customJsonFileType
-        });
-
-        if (result != null)
+            var json = File.ReadAllText("cars.json");
+            _cars = JsonConvert.DeserializeObject<List<Car>>(json) ?? new List<Car>();
+            JsonCollectionView.ItemsSource = _cars;
+        }
+        catch
         {
-            _jsonFilePath = result.FullPath;
-            var fileContent = File.ReadAllText(_jsonFilePath);
-            try
-            {
-                _jsonData = JsonSerializer.Deserialize<List<dynamic>>(fileContent) ?? new List<dynamic>();
-                JsonCollectionView.ItemsSource = _jsonData;
-            }
-            catch (JsonException)
-            {
-                await DisplayAlert("Error", "Invalid JSON format", "OK");
-            }
+            DisplayAlert("Error", "Could not load sample data.", "OK");
         }
     }
 
-
-    private void OnFindButtonClicked(object sender, EventArgs e)
+    private void OnAddFileClicked(object sender, EventArgs e)
     {
-        var filteredData = _jsonData.AsEnumerable();
-
-        // Фільтрування за критеріями
-        if (!string.IsNullOrWhiteSpace(FilterNameEntry.Text))
-            filteredData = filteredData.Where(item => item.name.ToString().Contains(FilterNameEntry.Text, StringComparison.OrdinalIgnoreCase));
-
-        if (!string.IsNullOrWhiteSpace(FilterBrandEntry.Text))
-            filteredData = filteredData.Where(item => item.brand.ToString().Contains(FilterBrandEntry.Text, StringComparison.OrdinalIgnoreCase));
-
-        if (!string.IsNullOrWhiteSpace(FilterCategoryEntry.Text))
-            filteredData = filteredData.Where(item => item.category.ToString().Contains(FilterCategoryEntry.Text, StringComparison.OrdinalIgnoreCase));
-
-        if (double.TryParse(FilterMinPriceEntry.Text, out var minPrice))
-            filteredData = filteredData.Where(item => item.price >= minPrice);
-
-        if (double.TryParse(FilterMaxPriceEntry.Text, out var maxPrice))
-            filteredData = filteredData.Where(item => item.price <= maxPrice);
-
-        if (int.TryParse(FilterYearEntry.Text, out var year))
-            filteredData = filteredData.Where(item => item.year == year);
-
-        if (int.TryParse(FilterStockEntry.Text, out var stock))
-            filteredData = filteredData.Where(item => item.stock >= stock);
-
-        JsonCollectionView.ItemsSource = filteredData.ToList();
+        try
+        {
+            var filePath = "cars.json"; // Замінити на діалог вибору файлів за необхідності
+            var json = File.ReadAllText(filePath);
+            var carsFromFile = JsonConvert.DeserializeObject<List<Car>>(json);
+            if (carsFromFile != null)
+            {
+                _cars = carsFromFile;
+                JsonCollectionView.ItemsSource = _cars;
+            }
+        }
+        catch
+        {
+            DisplayAlert("Error", "Invalid JSON file format.", "OK");
+        }
     }
 
-    private void OnClearButtonClicked(object sender, EventArgs e)
+    private void OnFindClicked(object sender, EventArgs e)
     {
+        var filteredCars = _cars.AsEnumerable();
+
+        // Фільтри за введеними даними
+        if (!string.IsNullOrWhiteSpace(FilterNameEntry.Text))
+            filteredCars = filteredCars.Where(car => car.Name.Contains(FilterNameEntry.Text, StringComparison.OrdinalIgnoreCase));
+
+        if (!string.IsNullOrWhiteSpace(FilterBrandEntry.Text))
+            filteredCars = filteredCars.Where(car => car.Brand.Contains(FilterBrandEntry.Text, StringComparison.OrdinalIgnoreCase));
+
+        if (!string.IsNullOrWhiteSpace(FilterCategoryEntry.Text))
+            filteredCars = filteredCars.Where(car => car.Category.Contains(FilterCategoryEntry.Text, StringComparison.OrdinalIgnoreCase));
+
+        if (double.TryParse(FilterMinPriceEntry.Text, out var minPrice))
+            filteredCars = filteredCars.Where(car => car.Price >= minPrice);
+
+        if (double.TryParse(FilterMaxPriceEntry.Text, out var maxPrice))
+            filteredCars = filteredCars.Where(car => car.Price <= maxPrice);
+
+        if (int.TryParse(FilterYearEntry.Text, out var year))
+            filteredCars = filteredCars.Where(car => car.Year == year);
+
+        if (int.TryParse(FilterStockEntry.Text, out var stock))
+            filteredCars = filteredCars.Where(car => car.Stock >= stock);
+
+        // Оновлюємо CollectionView з результатами фільтрації
+        JsonCollectionView.ItemsSource = filteredCars.ToList();
+    }
+
+    private void OnClearClicked(object sender, EventArgs e)
+    {
+        // Очистити поля фільтрів
         FilterNameEntry.Text = string.Empty;
         FilterBrandEntry.Text = string.Empty;
         FilterCategoryEntry.Text = string.Empty;
@@ -90,26 +90,35 @@ public partial class MainPage : ContentPage
         FilterYearEntry.Text = string.Empty;
         FilterStockEntry.Text = string.Empty;
 
-        JsonCollectionView.ItemsSource = _jsonData;
+        // Повернути початковий список
+        JsonCollectionView.ItemsSource = _cars;
     }
 
-    private async void OnAddNewItemButtonClicked(object sender, EventArgs e)
+    private async void OnAddNewItemClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new EditPage());
+        await Navigation.PushAsync(new AddNewItemPage(_cars, this));
     }
 
-    private async void OnEditItemInfoButtonClicked(object sender, EventArgs e)
+    private async void OnEditItemInfoClicked(object sender, EventArgs e)
     {
-        if (_jsonData != null && _jsonData.Any())
+        if (JsonCollectionView.SelectedItem is Car selectedCar)
         {
-            await Navigation.PushAsync(new EditPage(_jsonData));
+            await Navigation.PushAsync(new EditItemPage(selectedCar, this));
+        }
+        else
+        {
+            await DisplayAlert("Error", "Please select an item to edit.", "OK");
         }
     }
 
-    private async void OnInfoAboutProjectButtonClicked(object sender, EventArgs e)
+    private async void OnInfoClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("About Project",
-            "Author: [Your Name]\nCourse: [Your Course]\nYear: 2024\nDescription: JSON Analyzer Application",
-            "OK");
+        await DisplayAlert("Error", "Please select an item to edit.", "OK");
+    }
+
+    public void RefreshData()
+    {
+        JsonCollectionView.ItemsSource = null;
+        JsonCollectionView.ItemsSource = _cars;
     }
 }

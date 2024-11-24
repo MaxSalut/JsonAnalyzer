@@ -2,16 +2,16 @@ using System.Text.Json;
 
 namespace JsonAnalyzer;
 
-public partial class EditPage : ContentPage
+public partial class EditItemPage : ContentPage
 {
     private dynamic? _itemToEdit;
 
-    public EditPage()
+    public EditItemPage()
     {
         InitializeComponent();
     }
 
-    public EditPage(dynamic item)
+    public EditItemPage(dynamic item)
     {
         InitializeComponent();
         _itemToEdit = item;
