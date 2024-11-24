@@ -39,33 +39,28 @@ public partial class MainPage : ContentPage
         {
             try
             {
-                // Зчитуємо вміст JSON
                 var fileContent = File.ReadAllText(result.FullPath);
 
-                // Логування для відладки
-                Console.WriteLine("Loaded JSON Content:");
-                Console.WriteLine(fileContent);
+                // Десеріалізація JSON
+                var carsFromFile = JsonConvert.DeserializeObject<List<Car>>(fileContent);
 
-                // Десеріалізуємо JSON у список
-                _cars = JsonConvert.DeserializeObject<List<Car>>(fileContent) ?? new List<Car>();
-
-                // Логування десеріалізованих даних
-                Console.WriteLine("Parsed Cars:");
-                foreach (var car in _cars)
+                if (carsFromFile == null || !carsFromFile.Any())
                 {
-                    Console.WriteLine($"{car.Id}, {car.Name}, {car.Brand}");
+                    await DisplayAlert("Error", "JSON file is empty or has invalid structure.", "OK");
+                    return;
                 }
 
-                // Оновлюємо CollectionView
+                _cars = carsFromFile;
+
+                // Оновлення CollectionView
                 JsonCollectionView.ItemsSource = null;
                 JsonCollectionView.ItemsSource = _cars;
 
-                // Зберігаємо шлях до JSON
-                _jsonFilePath = result.FullPath;
+                _jsonFilePath = result.FullPath; // Збереження шляху до JSON
             }
-            catch (JsonReaderException)
+            catch (JsonReaderException jsonEx)
             {
-                await DisplayAlert("Error", "Invalid JSON format.", "OK");
+                await DisplayAlert("Error", $"Invalid JSON format: {jsonEx.Message}", "OK");
             }
             catch (Exception ex)
             {
@@ -73,6 +68,7 @@ public partial class MainPage : ContentPage
             }
         }
     }
+
 
 
 
