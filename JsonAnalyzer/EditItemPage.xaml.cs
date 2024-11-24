@@ -1,40 +1,43 @@
-using System.Text.Json;
+using JsonAnalyzer.Models;
 
-namespace JsonAnalyzer;
-
-public partial class EditItemPage : ContentPage
+namespace JsonAnalyzer
 {
-    private dynamic? _itemToEdit;
-
-    public EditItemPage()
+    public partial class EditItemPage : ContentPage
     {
-        InitializeComponent();
-    }
+        private Car _car;
+        private MainPage _mainPage;
 
-    public EditItemPage(dynamic item)
-    {
-        InitializeComponent();
-        _itemToEdit = item;
-        JsonEditor.Text = JsonSerializer.Serialize(item, new JsonSerializerOptions { WriteIndented = true });
-    }
-
-    private async void OnSaveButtonClicked(object sender, EventArgs e)
-    {
-        if (string.IsNullOrWhiteSpace(JsonEditor.Text)) return;
-
-        try
+        public EditItemPage(Car car, MainPage mainPage)
         {
-            var updatedItem = JsonSerializer.Deserialize<dynamic>(JsonEditor.Text);
-            if (updatedItem != null)
-            {
-                // TODO: Implement logic to save this updated item back to the main list
-            }
+            InitializeComponent();
+            _car = car;
+            _mainPage = mainPage;
 
-            await Navigation.PopAsync();
+            JsonEditor.Text = Newtonsoft.Json.JsonConvert.SerializeObject(_car, Newtonsoft.Json.Formatting.Indented);
         }
-        catch (JsonException)
+
+        private void OnSaveClicked(object sender, EventArgs e)
         {
-            await DisplayAlert("Error", "Invalid JSON format", "OK");
+            try
+            {
+                var updatedCar = Newtonsoft.Json.JsonConvert.DeserializeObject<Car>(JsonEditor.Text);
+                if (updatedCar != null)
+                {
+                    _car.Name = updatedCar.Name;
+                    _car.Brand = updatedCar.Brand;
+                    _car.Price = updatedCar.Price;
+                    _car.Year = updatedCar.Year;
+                    _car.Category = updatedCar.Category;
+                    _car.Stock = updatedCar.Stock;
+
+                    _mainPage.RefreshData();
+                    Navigation.PopAsync();
+                }
+            }
+            catch
+            {
+                DisplayAlert("Error", "Invalid JSON format.", "OK");
+            }
         }
     }
 }

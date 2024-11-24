@@ -1,47 +1,20 @@
 [
   {
-    "id": 1,
-    "name": "Tesla Model S",
-    "brand": "Tesla",
-    "price": 79999.99,
-    "year": 2023,
-    "category": "Electric",
-    "stock": 5
+    "Id": 1,
+    "Name": "Tesla Model S",
+    "Brand": "Tesla",
+    "Price": 79999.99,
+    "Year": 2023,
+    "Category": "Electric",
+    "Stock": 5
   },
   {
-    "id": 2,
-    "name": "Ford Mustang Mach-E",
-    "brand": "Ford",
-    "price": 43995.00,
-    "year": 2022,
-    "category": "Electric",
-    "stock": 12
-  },
-  {
-    "id": 3,
-    "name": "BMW X5",
-    "brand": "BMW",
-    "price": 61700.00,
-    "year": 2023,
-    "category": "SUV",
-    "stock": 8
-  },
-  {
-    "id": 4,
-    "name": "Toyota Corolla",
-    "brand": "Toyota",
-    "price": 20000.00,
-    "year": 2022,
-    "category": "Sedan",
-    "stock": 25
-  },
-  {
-    "id": 5,
-    "name": "Mercedes-Benz EQS",
-    "brand": "Mercedes-Benz",
-    "price": 102310.00,
-    "year": 2023,
-    "category": "Luxury Electric",
-    "stock": 3
+    "Id": 2,
+    "Name": "Ford Mustang Mach-E",
+    "Brand": "Ford",
+    "Price": 43995.00,
+    "Year": 2022,
+    "Category": "Electric",
+    "Stock": 12
   }
 ]

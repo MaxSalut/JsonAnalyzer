@@ -1,53 +1,82 @@
 ﻿using Microsoft.Maui.Controls;
 using Newtonsoft.Json;
+using JsonAnalyzer.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 
 namespace JsonAnalyzer;
 
 public partial class MainPage : ContentPage
 {
     private List<Car> _cars = new();
-
+    private string? _jsonFilePath;
+    private List<dynamic> _jsonData = new();
     public MainPage()
     {
         InitializeComponent();
-        LoadSampleData();
     }
 
-    private void LoadSampleData()
-    {
-        try
-        {
-            var json = File.ReadAllText("cars.json");
-            _cars = JsonConvert.DeserializeObject<List<Car>>(json) ?? new List<Car>();
-            JsonCollectionView.ItemsSource = _cars;
-        }
-        catch
-        {
-            DisplayAlert("Error", "Could not load sample data.", "OK");
-        }
-    }
 
-    private void OnAddFileClicked(object sender, EventArgs e)
+    private async void OnAddFileClicked(object sender, EventArgs e)
     {
-        try
+        var customJsonFileType = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+    {
+        { DevicePlatform.iOS, new[] { "public.json" } },
+        { DevicePlatform.Android, new[] { "application/json" } },
+        { DevicePlatform.WinUI, new[] { ".json" } },
+        { DevicePlatform.MacCatalyst, new[] { "json" } }
+    });
+
+        var result = await FilePicker.Default.PickAsync(new PickOptions
         {
-            var filePath = "cars.json"; // Замінити на діалог вибору файлів за необхідності
-            var json = File.ReadAllText(filePath);
-            var carsFromFile = JsonConvert.DeserializeObject<List<Car>>(json);
-            if (carsFromFile != null)
+            PickerTitle = "Select a JSON file",
+            FileTypes = customJsonFileType
+        });
+
+        if (result != null)
+        {
+            try
             {
-                _cars = carsFromFile;
+                // Зчитуємо вміст JSON
+                var fileContent = File.ReadAllText(result.FullPath);
+
+                // Логування для відладки
+                Console.WriteLine("Loaded JSON Content:");
+                Console.WriteLine(fileContent);
+
+                // Десеріалізуємо JSON у список
+                _cars = JsonConvert.DeserializeObject<List<Car>>(fileContent) ?? new List<Car>();
+
+                // Логування десеріалізованих даних
+                Console.WriteLine("Parsed Cars:");
+                foreach (var car in _cars)
+                {
+                    Console.WriteLine($"{car.Id}, {car.Name}, {car.Brand}");
+                }
+
+                // Оновлюємо CollectionView
+                JsonCollectionView.ItemsSource = null;
                 JsonCollectionView.ItemsSource = _cars;
+
+                // Зберігаємо шлях до JSON
+                _jsonFilePath = result.FullPath;
+            }
+            catch (JsonReaderException)
+            {
+                await DisplayAlert("Error", "Invalid JSON format.", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Error", $"Unexpected error: {ex.Message}", "OK");
             }
         }
-        catch
-        {
-            DisplayAlert("Error", "Invalid JSON file format.", "OK");
-        }
     }
+
+
+
+
 
     private void OnFindClicked(object sender, EventArgs e)
     {
@@ -81,7 +110,6 @@ public partial class MainPage : ContentPage
 
     private void OnClearClicked(object sender, EventArgs e)
     {
-        // Очистити поля фільтрів
         FilterNameEntry.Text = string.Empty;
         FilterBrandEntry.Text = string.Empty;
         FilterCategoryEntry.Text = string.Empty;
@@ -90,7 +118,6 @@ public partial class MainPage : ContentPage
         FilterYearEntry.Text = string.Empty;
         FilterStockEntry.Text = string.Empty;
 
-        // Повернути початковий список
         JsonCollectionView.ItemsSource = _cars;
     }
 
@@ -98,6 +125,7 @@ public partial class MainPage : ContentPage
     {
         await Navigation.PushAsync(new AddNewItemPage(_cars, this));
     }
+
 
     private async void OnEditItemInfoClicked(object sender, EventArgs e)
     {
@@ -113,7 +141,7 @@ public partial class MainPage : ContentPage
 
     private async void OnInfoClicked(object sender, EventArgs e)
     {
-        await DisplayAlert("Error", "Please select an item to edit.", "OK");
+      //  await Navigation.PushAsync(new InfoPage());
     }
 
     public void RefreshData()
