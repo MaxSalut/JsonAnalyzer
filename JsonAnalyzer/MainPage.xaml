@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="JSON Analyzer"
+             x:Class="JsonAnalyzer.MainPage">
+    <Grid RowDefinitions="*,Auto" ColumnDefinitions="2*,3*">
+        <!-- Ліва панель -->
+        <ScrollView Grid.Column="0" Padding="10">
+            <VerticalStackLayout Spacing="10">
+                <!-- Кнопки управління -->
+                <Button Text="Add File" x:Name="AddFileButton" Clicked="OnAddFileButtonClicked" />
+                <Button Text="Find" x:Name="FindButton" Clicked="OnFindButtonClicked" />
+                <Button Text="Info About Project" x:Name="InfoAboutProjectButton" Clicked="OnInfoAboutProjectButtonClicked" />
+                <HorizontalStackLayout Spacing="10">
+                    <Button Text="Add New Item" x:Name="AddNewItemButton" Clicked="OnAddNewItemButtonClicked" />
+                    <Button Text="Edit Item Info" x:Name="EditItemInfoButton" Clicked="OnEditItemInfoButtonClicked" />
+                    <Button Text="Clear" x:Name="ClearButton" Clicked="OnClearButtonClicked" />
+                </HorizontalStackLayout>
+
+                <!-- Фільтри -->
+                <Label Text="Filter Properties:" FontAttributes="Bold" />
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Name:" />
+                    <Entry Placeholder="Enter car name" x:Name="FilterNameEntry" />
+                    <Label Text="Brand:" />
+                    <Entry Placeholder="Enter brand" x:Name="FilterBrandEntry" />
+                    <Label Text="Category:" />
+                    <Entry Placeholder="Enter category" x:Name="FilterCategoryEntry" />
+                    <Label Text="Min Price:" />
+                    <Entry Placeholder="Enter min price" x:Name="FilterMinPriceEntry" Keyboard="Numeric" />
+                    <Label Text="Max Price:" />
+                    <Entry Placeholder="Enter max price" x:Name="FilterMaxPriceEntry" Keyboard="Numeric" />
+                    <Label Text="Year:" />
+                    <Entry Placeholder="Enter year" x:Name="FilterYearEntry" Keyboard="Numeric" />
+                    <Label Text="Stock Availability:" />
+                    <Entry Placeholder="Enter stock count" x:Name="FilterStockEntry" Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Права панель: перегляд JSON -->
+        <CollectionView Grid.Column="1" x:Name="JsonCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="5" BorderColor="LightGray" CornerRadius="5">
+                        <VerticalStackLayout>
+                            <Label Text="ID: {Binding Id}" FontAttributes="Bold" />
+                            <Label Text="Name: {Binding Name}" />
+                            <Label Text="Brand: {Binding Brand}" />
+                            <Label Text="Price: {Binding Price, StringFormat='{0:C}'}" />
+                            <Label Text="Year: {Binding Year}" />
+                            <Label Text="Category: {Binding Category}" />
+                            <Label Text="Stock: {Binding Stock}" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>
