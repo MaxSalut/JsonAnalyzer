@@ -18,12 +18,11 @@ public partial class AddNewItemPage : ContentPage
     {
         try
         {
-            // Знаходимо максимальний ID у списку або 0, якщо список порожній
             var maxId = _cars.Count > 0 ? _cars.Max(car => car.Id) : 0;
 
             var newCar = new Car
             {
-                Id = maxId + 1, // Новий ID = максимальний ID + 1
+                Id = maxId + 1, 
                 Name = NameEntry.Text,
                 Brand = BrandEntry.Text,
                 Price = double.TryParse(PriceEntry.Text, out var price) ? price : 0,

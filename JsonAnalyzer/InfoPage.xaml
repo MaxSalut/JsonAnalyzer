@@ -5,7 +5,6 @@
     <ScrollView>
         <VerticalStackLayout Padding="30" Spacing="25" BackgroundColor="#F9F9F9">
 
-            <!-- Заголовок -->
             <Frame BackgroundColor="#4CAF50" Padding="15" CornerRadius="10">
                 <Label Text="Про автора"
                        FontSize="26"
@@ -14,7 +13,6 @@
                        HorizontalTextAlignment="Center" />
             </Frame>
 
-            <!-- Інформація про автора -->
             <Frame Padding="15" CornerRadius="10" BorderColor="#E0E0E0" BackgroundColor="White">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="👤 Автор: Безверхий Максим Вікторови"
@@ -33,7 +31,6 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Опис програми -->
             <Frame Padding="15" CornerRadius="10" BorderColor="#E0E0E0" BackgroundColor="White">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="📜 Опис:"

@@ -13,7 +13,6 @@ public partial class EditItemPage : ContentPage
         _car = car;
         _mainPage = mainPage;
 
-        // Заповнення даних у форму
         NameEntry.Text = _car.Name;
         BrandEntry.Text = _car.Brand;
         PriceEntry.Text = _car.Price.ToString();
@@ -24,7 +23,6 @@ public partial class EditItemPage : ContentPage
 
     private void OnSaveClicked(object sender, EventArgs e)
     {
-        // Оновлення даних автомобіля
         _car.Name = NameEntry.Text;
         _car.Brand = BrandEntry.Text;
         _car.Price = double.TryParse(PriceEntry.Text, out var price) ? price : 0;

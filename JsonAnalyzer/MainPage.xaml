@@ -4,11 +4,12 @@
              x:Class="JsonAnalyzer.MainPage"
              BackgroundColor="#E5E7EB">
     <ContentPage.Resources>
-        <!-- Основні стилі -->
+
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="#3B82F6" />
             <Setter Property="TextColor" Value="White" />
             <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="RobotoBold" />
             <Setter Property="CornerRadius" Value="8" />
             <Setter Property="Padding" Value="12,8" />
             <Setter Property="Margin" Value="5" />
@@ -16,11 +17,13 @@
         <Style x:Key="LabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextColor" Value="#374151" />
+            <Setter Property="FontFamily" Value="RobotoRegular" />
             <Setter Property="Margin" Value="0,5" />
         </Style>
         <Style x:Key="EntryStyle" TargetType="Entry">
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextColor" Value="#374151" />
+            <Setter Property="FontFamily" Value="RobotoRegular" />
             <Setter Property="BackgroundColor" Value="#F3F4F6" />
             <Setter Property="Margin" Value="5,5" />
             <Setter Property="HeightRequest" Value="40" />
@@ -31,6 +34,7 @@
             <Setter Property="FontAttributes" Value="Bold" />
             <Setter Property="BackgroundColor" Value="#3B82F6" />
             <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontFamily" Value="RobotoBold" />
             <Setter Property="Padding" Value="5,3" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -38,9 +42,9 @@
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto" ColumnDefinitions="1.75*,3*">
-        <!-- Ліва панель -->
+      
         <Grid Grid.Column="0" RowDefinitions="Auto,*" Padding="10" BackgroundColor="#F9FAFB">
-            <!-- Закріплені кнопки -->
+           
             <VerticalStackLayout Spacing="10">
                 <Button Text="Додати файл" x:Name="AddFileButton" Clicked="OnAddFileClicked" Style="{StaticResource ButtonStyle}" />
                 <Button Text="Знайти" x:Name="FindButton" Clicked="OnFindClicked" Style="{StaticResource ButtonStyle}" />
@@ -53,7 +57,6 @@
                 <Button Text="Очистити" x:Name="ClearButton" Clicked="OnClearClicked" Style="{StaticResource ButtonStyle}" />
             </VerticalStackLayout>
 
-            <!-- Прокручувані фільтри -->
             <ScrollView Grid.Row="1" Padding="10">
                 <VerticalStackLayout Spacing="10">
                     <Label Text="Фільтрувати за властивостями:" FontAttributes="Bold" Style="{StaticResource LabelStyle}" />
@@ -77,7 +80,6 @@
             </ScrollView>
         </Grid>
 
-        <!-- Права панель з горизонтальною і вертикальною прокруткою -->
         <ScrollView Grid.Column="1" Orientation="Both">
             <Grid Padding="5" BackgroundColor="#FFFFFF">
                 <Grid.RowDefinitions>
@@ -94,7 +96,7 @@
                     <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
 
-                <!-- Заголовки колонок -->
+                
                 <Label Text="ID" Grid.Row="0" Grid.Column="0" Style="{StaticResource GridHeaderStyle}" />
                 <Label Text="Назва" Grid.Row="0" Grid.Column="1" Style="{StaticResource GridHeaderStyle}" />
                 <Label Text="Бренд" Grid.Row="0" Grid.Column="2" Style="{StaticResource GridHeaderStyle}" />
@@ -103,7 +105,7 @@
                 <Label Text="Категорія" Grid.Row="0" Grid.Column="5" Style="{StaticResource GridHeaderStyle}" />
                 <Label Text="Склад" Grid.Row="0" Grid.Column="6" Style="{StaticResource GridHeaderStyle}" />
 
-                <!-- Дані -->
+                
                 <CollectionView x:Name="JsonCollectionView"
                                 Grid.Row="1"
                                 Grid.ColumnSpan="7"

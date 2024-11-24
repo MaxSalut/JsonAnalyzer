@@ -39,28 +39,27 @@ public partial class MainPage : ContentPage
         {
             try
             {
-                // Зчитуємо вміст JSON
                 var fileContent = File.ReadAllText(result.FullPath);
 
-                // Логування для відладки
+               
                 Console.WriteLine("Loaded JSON Content:");
                 Console.WriteLine(fileContent);
 
-                // Десеріалізуємо JSON у список
+                
                 _cars = JsonConvert.DeserializeObject<List<Car>>(fileContent) ?? new List<Car>();
 
-                // Логування десеріалізованих даних
+           
                 Console.WriteLine("Parsed Cars:");
                 foreach (var car in _cars)
                 {
                     Console.WriteLine($"{car.Id}, {car.Name}, {car.Brand}");
                 }
 
-                // Оновлюємо CollectionView
+                
                 JsonCollectionView.ItemsSource = null;
                 JsonCollectionView.ItemsSource = _cars;
 
-                // Зберігаємо шлях до JSON
+                
                 _jsonFilePath = result.FullPath;
             }
             catch (JsonReaderException)
@@ -98,14 +97,14 @@ public partial class MainPage : ContentPage
     {
         if (SelectedCar != null)
         {
-            // Підтвердження видалення
+         
             bool isConfirmed = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete '{SelectedCar.Name}'?", "Yes", "No");
             if (isConfirmed)
             {
-                _cars.Remove(SelectedCar); // Видалення зі списку
-                SelectedCar = null; // Скидання вибраного елемента
-                RefreshData(); // Оновлення в UI
-                SaveJsonToFile(); // Збереження у файл
+                _cars.Remove(SelectedCar); 
+                SelectedCar = null; 
+                RefreshData(); 
+                SaveJsonToFile(); 
             }
         }
         else
@@ -143,7 +142,7 @@ public partial class MainPage : ContentPage
         if (int.TryParse(FilterStockEntry.Text, out var stock))
             filteredCars = filteredCars.Where(car => car.Stock >= stock);
 
-        // Оновлюємо CollectionView з результатами фільтрації
+    
         JsonCollectionView.ItemsSource = filteredCars.ToList();
     }
 
@@ -174,7 +173,7 @@ public partial class MainPage : ContentPage
         set
         {
             _selectedCar = value;
-            OnPropertyChanged(); // Сповіщення про зміну властивості
+            OnPropertyChanged(); 
         }
     }
 
